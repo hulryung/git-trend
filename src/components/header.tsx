@@ -18,7 +18,7 @@ export function Header() {
             <Rss className="w-5 h-5" />
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/hulryung/git-trend"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
