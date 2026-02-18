@@ -30,6 +30,7 @@ export async function runAnalysisBatch(limit = 5) {
 
   let success = 0;
   let failed = 0;
+  const errors: string[] = [];
 
   for (const repo of repos) {
     try {
@@ -60,6 +61,8 @@ export async function runAnalysisBatch(limit = 5) {
       console.log(`[analyzer] Done: ${repo.fullName}`);
     } catch (err) {
       failed++;
+      const msg = err instanceof Error ? err.message : String(err);
+      errors.push(`${repo.fullName}: ${msg}`);
       console.error(`[analyzer] Failed: ${repo.fullName}`, err);
     }
 
@@ -69,5 +72,5 @@ export async function runAnalysisBatch(limit = 5) {
     }
   }
 
-  return { total: repos.length, success, failed };
+  return { total: repos.length, success, failed, errors };
 }
