@@ -2,11 +2,11 @@
   "crons": [
     {
       "path": "/api/cron/collect",
-      "schedule": "0 0 * * *"
+      "schedule": "0 22 * * *"
     },
     {
       "path": "/api/cron/analyze",
-      "schedule": "0 1 * * *"
+      "schedule": "0 23 * * *"
     }
   ]
 }
