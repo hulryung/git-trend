@@ -86,5 +86,48 @@ function buildPayload(
     };
   }
 
+  if (platform === "teams") {
+    return {
+      type: "message",
+      attachments: [
+        {
+          contentType: "application/vnd.microsoft.card.adaptive",
+          content: {
+            $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
+            type: "AdaptiveCard",
+            version: "1.4",
+            body: [
+              {
+                type: "TextBlock",
+                size: "Large",
+                weight: "Bolder",
+                text: `GitHub Trending - ${date}`,
+              },
+              ...repos.slice(0, 10).map((repo) => ({
+                type: "Container",
+                items: [
+                  {
+                    type: "TextBlock",
+                    text: `[${repo.fullName}](https://github.com/${repo.fullName}) ⭐ ${repo.stars}`,
+                    wrap: true,
+                    weight: "Bolder",
+                  },
+                  {
+                    type: "TextBlock",
+                    text: repo.description || "No description",
+                    wrap: true,
+                    isSubtle: true,
+                    spacing: "None",
+                  },
+                ],
+                separator: true,
+              })),
+            ],
+          },
+        },
+      ],
+    };
+  }
+
   return { date, repos: repos.slice(0, 25) };
 }
