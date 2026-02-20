@@ -3,6 +3,11 @@ import { db } from "@/lib/db";
 import { webhookSubscriptions } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
+export async function GET() {
+  const subs = await db.select().from(webhookSubscriptions).orderBy(webhookSubscriptions.id);
+  return NextResponse.json(subs);
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.json();
   const { url, platform, filters } = body;
