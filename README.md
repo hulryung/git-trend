@@ -8,15 +8,16 @@ GitHub Trending 레포지토리를 자동 수집하고, AI(Claude 4 Sonnet via R
 
 - **트렌딩 수집** — GitHub Trending 페이지를 크롤링하여 daily/weekly/monthly 트렌딩 레포를 자동 수집
 - **AI 분석** — 각 레포의 README, 파일 구조, 기술 스택을 분석하여 한국어/영어 요약, 카테고리 분류, 난이도 평가 제공
+- **날짜별 네비게이션** — 좌우 화살표로 과거 트렌드 탐색, 전체 페이지 수 표시
 - **스타 히스토리** — 레포별 스타 추이를 차트로 시각화
 - **RSS 피드** — 트렌딩 레포를 RSS로 구독 가능
-- **Webhook 알림** — Slack, Discord 등으로 새로운 트렌딩 레포 알림 발송
+- **Webhook 알림** — Slack, Discord, Microsoft Teams로 새로운 트렌딩 레포 알림 발송
 
 ## 기술 스택
 
 | 구분 | 기술 |
 |------|------|
-| Framework | Next.js 15 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | Language | TypeScript |
 | UI | Tailwind CSS v4 + shadcn/ui |
 | DB | Drizzle ORM + Turso (SQLite) |
@@ -48,6 +49,7 @@ REPLICATE_API_TOKEN=r8_xxx        # Replicate API 토큰 (필수)
 GITHUB_TOKEN=ghp_xxx              # GitHub PAT (권장, rate limit 완화)
 TURSO_DATABASE_URL=file:local.db  # 로컬 개발 시 그대로 사용
 CRON_SECRET=dev-secret            # 크론 엔드포인트 보호용
+ADMIN_PASSWORD=admin-secret       # Webhook 관리 인증용
 ```
 
 ### 3. DB 마이그레이션
@@ -78,10 +80,12 @@ curl http://localhost:3000/api/cron/analyze -H "Authorization: Bearer dev-secret
 
 | Method | Path | 설명 |
 |--------|------|------|
-| GET | `/api/trending?period=daily&language=Python` | 트렌딩 목록 |
+| GET | `/api/trending?period=daily&language=Python&date=2026-02-22` | 트렌딩 목록 |
 | GET | `/api/repo/:owner/:name` | 레포 상세 + AI 분석 |
 | GET | `/feed/rss.xml?period=daily&language=Rust` | RSS 피드 |
+| GET | `/api/webhook` | Webhook 목록 조회 |
 | POST | `/api/webhook` | Webhook 등록 |
+| PATCH | `/api/webhook` | Webhook 활성/비활성 토글 |
 | DELETE | `/api/webhook` | Webhook 삭제 |
 | GET | `/api/cron/collect` | 트렌딩 수집 (크론) |
 | GET | `/api/cron/analyze` | AI 분석 (크론) |
@@ -91,8 +95,9 @@ curl http://localhost:3000/api/cron/analyze -H "Authorization: Bearer dev-secret
 ```
 src/
 ├── app/                    # Next.js App Router
-│   ├── page.tsx            # 메인 (트렌딩 리스트)
+│   ├── page.tsx            # 메인 (트렌딩 리스트 + 날짜 네비게이션)
 │   ├── repo/[owner]/[name] # 레포 상세 페이지
+│   ├── webhooks/           # Webhook 관리 페이지
 │   ├── feed/rss.xml        # RSS 피드
 │   └── api/                # API 라우트
 ├── lib/
@@ -111,8 +116,8 @@ vercel deploy
 
 환경변수를 Vercel 대시보드에서 설정하면 크론이 자동으로 동작합니다:
 
-- `/api/cron/collect` — 매 6시간
-- `/api/cron/analyze` — 매 6시간 (30분 오프셋)
+- `/api/cron/collect` — 매일 KST 07:00
+- `/api/cron/analyze` — 매일 KST 08:00
 
 ## License
 
