@@ -23,6 +23,7 @@ export function PeriodSelector({ current }: PeriodSelectorProps) {
       onValueChange={(value) => {
         const params = new URLSearchParams(window.location.search);
         params.set("period", value);
+        params.delete("date");
         router.push(`${pathname}?${params.toString()}`);
       }}
     >
