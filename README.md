@@ -2,6 +2,8 @@
 
 GitHub Trending 레포지토리를 자동 수집하고, AI(Claude 4 Sonnet via Replicate)로 분석하여 한국어/영어 요약을 제공하는 웹사이트.
 
+![git-trend screenshot](docs/screenshot.png)
+
 ## 주요 기능
 
 - **트렌딩 수집** — GitHub Trending 페이지를 크롤링하여 daily/weekly/monthly 트렌딩 레포를 자동 수집
