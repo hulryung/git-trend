@@ -1,7 +1,17 @@
 import Link from "next/link";
-import { Star, GitFork, TrendingUp } from "lucide-react";
+import { Star, GitFork, TrendingUp, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+
+interface NewsItem {
+  title: string;
+  url: string;
+  source: string;
+  sourceLabel: string;
+  date: string | null;
+  points?: number;
+  comments?: number;
+}
 
 interface RepoCardProps {
   rank: number;
@@ -13,6 +23,7 @@ interface RepoCardProps {
   starsToday: number | null;
   category?: string | null;
   summaryKo?: string | null;
+  news?: NewsItem[];
 }
 
 const languageColors: Record<string, string> = {
@@ -33,6 +44,12 @@ const languageColors: Record<string, string> = {
   Zig: "#ec915c",
 };
 
+const sourceBadgeColor: Record<string, string> = {
+  hackernews: "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+  github_release: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+  devto: "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
+};
+
 function formatNumber(num: number): string {
   if (num >= 1000) {
     return (num / 1000).toFixed(1).replace(/\.0$/, "") + "k";
@@ -50,6 +67,7 @@ export function RepoCard({
   starsToday,
   category,
   summaryKo,
+  news,
 }: RepoCardProps) {
   const [owner, name] = fullName.split("/");
 
@@ -110,6 +128,30 @@ export function RepoCard({
                 </span>
               )}
             </div>
+
+            {news && news.length > 0 && (
+              <div className="mt-3 pt-3 border-t space-y-1.5">
+                {news.map((item, i) => (
+                  <a
+                    key={i}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-xs group"
+                  >
+                    <Badge
+                      className={`text-[9px] px-1 py-0 shrink-0 ${sourceBadgeColor[item.source] || "bg-muted text-muted-foreground"}`}
+                    >
+                      {item.sourceLabel}
+                    </Badge>
+                    <span className="truncate text-muted-foreground group-hover:text-foreground transition-colors">
+                      {item.title}
+                    </span>
+                    <ExternalLink className="w-3 h-3 shrink-0 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </CardContent>
