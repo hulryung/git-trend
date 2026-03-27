@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { repositories, trendingSnapshots, analyses } from "@/lib/db/schema";
 import { eq, desc, and } from "drizzle-orm";
 import { TrendingList } from "@/components/trending-list";
+import { TrendingNews } from "@/components/trending-news";
 import { PeriodSelector } from "@/components/period-selector";
 import { LanguageFilter } from "@/components/language-filter";
 import { DateNavigator } from "@/components/date-navigator";
@@ -100,6 +101,8 @@ export default async function HomePage({ searchParams }: PageProps) {
       <LanguageFilter current={language || ""} />
 
       <TrendingList items={items} />
+
+      <TrendingNews repos={items.map((r) => ({ fullName: r.fullName }))} />
     </div>
   );
 }
