@@ -31,12 +31,12 @@ export default async function HomePage({ searchParams }: PageProps) {
         <div>
           <h1 className="text-3xl font-bold mb-2">GitHub Trending</h1>
           <p className="text-muted-foreground">
-            Trending repositories with AI-powered analysis
+            AI 분석과 함께 보는 GitHub 트렌딩 저장소
           </p>
         </div>
         <PeriodSelector current={period} />
         <div className="text-center py-12 text-muted-foreground">
-          <p className="text-lg">No data collected yet.</p>
+          <p className="text-lg">아직 수집된 데이터가 없습니다.</p>
         </div>
       </div>
     );
@@ -87,7 +87,7 @@ export default async function HomePage({ searchParams }: PageProps) {
       <div>
         <h1 className="text-3xl font-bold mb-2">GitHub Trending</h1>
         <p className="text-muted-foreground">
-          Trending repositories with AI-powered analysis
+          AI 분석과 함께 보는 GitHub 트렌딩 저장소
         </p>
       </div>
 

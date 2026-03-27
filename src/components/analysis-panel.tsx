@@ -16,9 +16,9 @@ interface AnalysisPanelProps {
 }
 
 const difficultyConfig: Record<string, { label: string; color: string }> = {
-  beginner: { label: "Beginner", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" },
-  intermediate: { label: "Intermediate", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200" },
-  advanced: { label: "Advanced", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" },
+  beginner: { label: "입문", color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" },
+  intermediate: { label: "중급", color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200" },
+  advanced: { label: "고급", color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200" },
 };
 
 export function AnalysisPanel({
@@ -40,7 +40,7 @@ export function AnalysisPanel({
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Brain className="w-5 h-5" />
-            AI Analysis
+            AI 분석
           </CardTitle>
           <div className="flex items-center gap-2">
             {category && <Badge variant="outline">{category}</Badge>}
@@ -53,7 +53,7 @@ export function AnalysisPanel({
       <CardContent className="space-y-4">
         {summaryKo && (
           <div>
-            <h4 className="font-medium text-sm text-muted-foreground mb-1">Summary (KO)</h4>
+            <h4 className="font-medium text-sm text-muted-foreground mb-1">요약</h4>
             <p>{summaryKo}</p>
           </div>
         )}
@@ -69,7 +69,7 @@ export function AnalysisPanel({
         {techStack.length > 0 && (
           <div>
             <h4 className="font-medium text-sm flex items-center gap-1 mb-2">
-              <Code className="w-4 h-4" /> Tech Stack
+              <Code className="w-4 h-4" /> 기술 스택
             </h4>
             <div className="flex flex-wrap gap-1.5">
               {techStack.map((tech) => (
@@ -82,7 +82,7 @@ export function AnalysisPanel({
         {highlights.length > 0 && (
           <div>
             <h4 className="font-medium text-sm flex items-center gap-1 mb-2">
-              <Lightbulb className="w-4 h-4" /> Highlights
+              <Lightbulb className="w-4 h-4" /> 주요 특징
             </h4>
             <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
               {highlights.map((h) => (
@@ -95,7 +95,7 @@ export function AnalysisPanel({
         {useCases.length > 0 && (
           <div>
             <h4 className="font-medium text-sm flex items-center gap-1 mb-2">
-              <Target className="w-4 h-4" /> Use Cases
+              <Target className="w-4 h-4" /> 활용 사례
             </h4>
             <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
               {useCases.map((u) => (
@@ -108,7 +108,7 @@ export function AnalysisPanel({
         {similarProjects.length > 0 && (
           <div>
             <h4 className="font-medium text-sm flex items-center gap-1 mb-2">
-              <Users className="w-4 h-4" /> Similar Projects
+              <Users className="w-4 h-4" /> 유사 프로젝트
             </h4>
             <div className="flex flex-wrap gap-1.5">
               {similarProjects.map((p) => (
@@ -119,7 +119,7 @@ export function AnalysisPanel({
         )}
 
         <p className="text-xs text-muted-foreground pt-2">
-          Analyzed at {new Date(analyzedAt).toLocaleDateString()}
+          분석일: {new Date(analyzedAt).toLocaleDateString("ko-KR")}
         </p>
       </CardContent>
     </Card>

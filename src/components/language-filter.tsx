@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 
 const languages = [
-  "All",
+  "전체",
   "TypeScript",
   "JavaScript",
   "Python",
@@ -30,7 +30,7 @@ export function LanguageFilter({ current }: LanguageFilterProps) {
 
   function handleChange(lang: string) {
     const params = new URLSearchParams(window.location.search);
-    if (lang === "All") {
+    if (lang === "전체") {
       params.delete("language");
     } else {
       params.set("language", lang);
@@ -45,7 +45,7 @@ export function LanguageFilter({ current }: LanguageFilterProps) {
           key={lang}
           onClick={() => handleChange(lang)}
           className={`px-3 py-1 rounded-full text-sm transition-colors ${
-            (lang === "All" && !current) || current === lang
+            (lang === "전체" && !current) || current === lang
               ? "bg-primary text-primary-foreground"
               : "bg-muted hover:bg-muted/80 text-muted-foreground"
           }`}

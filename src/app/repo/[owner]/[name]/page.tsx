@@ -110,7 +110,7 @@ export default async function RepoDetailPage({ params }: PageProps) {
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Trending
+        트렌딩으로 돌아가기
       </Link>
 
       <div>
@@ -129,11 +129,9 @@ export default async function RepoDetailPage({ params }: PageProps) {
           </a>
         </div>
 
-        {repoData.description && (
-          <p className="text-muted-foreground mt-2 text-lg">
-            {repoData.description}
-          </p>
-        )}
+        <p className="text-muted-foreground mt-2 text-lg">
+          {analysisData?.summaryKo || repoData.description || "설명 없음"}
+        </p>
 
         <div className="flex items-center gap-4 mt-4 text-sm flex-wrap">
           {repoData.language && (
@@ -185,7 +183,7 @@ export default async function RepoDetailPage({ params }: PageProps) {
       {stars.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>Star History</CardTitle>
+            <CardTitle>스타 히스토리</CardTitle>
           </CardHeader>
           <CardContent>
             <StarHistoryChart
@@ -198,7 +196,7 @@ export default async function RepoDetailPage({ params }: PageProps) {
       {snapshots.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>Trending History</CardTitle>
+            <CardTitle>트렌딩 히스토리</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">

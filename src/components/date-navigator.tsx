@@ -41,7 +41,7 @@ export function DateNavigator({ currentDate, dates }: DateNavigatorProps) {
         <span className="font-semibold text-lg">{formatted}</span>
         {currentIndex !== 0 && (
           <Button variant="ghost" size="xs" onClick={goToToday}>
-            Today
+            오늘
           </Button>
         )}
       </div>

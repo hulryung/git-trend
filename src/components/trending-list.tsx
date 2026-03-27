@@ -58,8 +58,8 @@ export function TrendingList({ items }: TrendingListProps) {
   if (items.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
-        <p className="text-lg">No trending repositories found.</p>
-        <p className="text-sm mt-2">Try a different period or language filter.</p>
+        <p className="text-lg">트렌딩 저장소가 없습니다.</p>
+        <p className="text-sm mt-2">다른 기간이나 언어 필터를 선택해 보세요.</p>
       </div>
     );
   }

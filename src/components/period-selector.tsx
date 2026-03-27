@@ -4,9 +4,9 @@ import { useRouter, usePathname } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const periods = [
-  { value: "daily", label: "Today" },
-  { value: "weekly", label: "This Week" },
-  { value: "monthly", label: "This Month" },
+  { value: "daily", label: "오늘" },
+  { value: "weekly", label: "이번 주" },
+  { value: "monthly", label: "이번 달" },
 ] as const;
 
 interface PeriodSelectorProps {

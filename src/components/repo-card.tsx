@@ -98,7 +98,7 @@ export function RepoCard({
             </div>
 
             <p className="text-muted-foreground text-sm mt-1 line-clamp-2">
-              {summaryKo || description || "No description"}
+              {summaryKo || description || "설명 없음"}
             </p>
 
             <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground flex-wrap">
@@ -125,7 +125,7 @@ export function RepoCard({
               {starsToday != null && starsToday > 0 && (
                 <span className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
                   <TrendingUp className="w-4 h-4" />
-                  {starsToday} today
+                  +{starsToday}
                 </span>
               )}
             </div>

@@ -58,13 +58,13 @@ export function RelatedNews({ owner, name }: { owner: string; name: string }) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Newspaper className="w-5 h-5" />
-            Related News
+            관련 뉴스
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="w-4 h-4 animate-spin" />
-            Loading news...
+            뉴스를 불러오는 중...
           </div>
         </CardContent>
       </Card>
@@ -78,7 +78,7 @@ export function RelatedNews({ owner, name }: { owner: string; name: string }) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Newspaper className="w-5 h-5" />
-          Related News & Releases
+          관련 뉴스 & 릴리즈
           <Badge variant="secondary" className="ml-auto text-xs">
             {news.length}
           </Badge>
