@@ -48,24 +48,28 @@ async function searchHackerNews(query: string): Promise<NewsItem[]> {
   if (!res.ok) return [];
 
   const data = await res.json();
-  return (data.hits || []).map(
-    (hit: {
-      title: string;
-      url: string | null;
-      objectID: string;
-      created_at: string;
-      points: number;
-      num_comments: number;
-    }) => ({
-      title: hit.title,
-      url: hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`,
-      source: "hackernews" as const,
-      sourceLabel: "Hacker News",
-      date: hit.created_at,
-      points: hit.points,
-      comments: hit.num_comments,
-      commentsUrl: `https://news.ycombinator.com/item?id=${hit.objectID}`,
-    })
+  return (data.hits || [])
+    .filter(
+      (hit: { url: string | null }) => hit.url && hit.url.trim() !== ""
+    )
+    .map(
+      (hit: {
+        title: string;
+        url: string;
+        objectID: string;
+        created_at: string;
+        points: number;
+        num_comments: number;
+      }) => ({
+        title: hit.title,
+        url: hit.url,
+        source: "hackernews" as const,
+        sourceLabel: "Hacker News",
+        date: hit.created_at,
+        points: hit.points,
+        comments: hit.num_comments,
+        commentsUrl: `https://news.ycombinator.com/item?id=${hit.objectID}`,
+      })
   );
 }
 
