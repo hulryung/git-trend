@@ -13,10 +13,64 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://trend.hulryung.com";
+
 export const metadata: Metadata = {
-  title: "git-trend - GitHub Trending with AI Analysis",
+  title: {
+    default: "git-trend - GitHub Trending with AI Analysis",
+    template: "%s | git-trend",
+  },
   description:
-    "Discover trending GitHub repositories with AI-powered analysis. Get Korean/English summaries, tech stack detection, and more.",
+    "Discover trending GitHub repositories with AI-powered analysis. Daily/weekly/monthly trending repos with Korean/English summaries, tech stack detection, related news, and webhook notifications.",
+  keywords: [
+    "GitHub",
+    "trending",
+    "repositories",
+    "AI analysis",
+    "open source",
+    "developer tools",
+    "GitHub trending",
+    "tech stack",
+    "Korean",
+    "깃허브",
+    "트렌딩",
+    "오픈소스",
+  ],
+  metadataBase: new URL(appUrl),
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/feed/rss.xml",
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    alternateLocale: "en_US",
+    url: appUrl,
+    siteName: "git-trend",
+    title: "git-trend - GitHub Trending with AI Analysis",
+    description:
+      "Discover trending GitHub repositories with AI-powered analysis. Daily/weekly/monthly trending repos with Korean/English summaries, tech stack detection, and more.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "git-trend - GitHub Trending with AI Analysis",
+    description:
+      "Discover trending GitHub repositories with AI-powered analysis.",
+    creator: "@hulryung",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -24,8 +78,35 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "git-trend",
+    url: appUrl,
+    description:
+      "Discover trending GitHub repositories with AI-powered analysis. Daily/weekly/monthly trending repos with Korean/English summaries.",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    author: {
+      "@type": "Person",
+      name: "hulryung",
+      url: "https://x.com/hulryung",
+    },
+  };
+
   return (
     <html lang="ko">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

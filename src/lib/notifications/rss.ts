@@ -9,7 +9,7 @@ interface RSSOptions {
 
 export async function generateRSS(options: RSSOptions): Promise<string> {
   const period = options.period || "daily";
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://git-trend.vercel.app";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://trend.hulryung.com";
 
   const conditions = [eq(trendingSnapshots.period, period)];
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TrendingUp, Rss, Bell } from "lucide-react";
+import { TrendingUp, Rss } from "lucide-react";
 
 export function Header() {
   return (
@@ -12,10 +12,9 @@ export function Header() {
         <nav className="flex items-center gap-4">
           <Link
             href="/webhooks"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            title="Webhooks"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <Bell className="w-5 h-5" />
+            Webhook 등록
           </Link>
           <Link
             href="/feed/rss.xml"

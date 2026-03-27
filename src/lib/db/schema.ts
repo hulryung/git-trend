@@ -113,6 +113,7 @@ export const webhookSubscriptions = sqliteTable("webhook_subscriptions", {
   url: text("url").notNull(),
   platform: text("platform").notNull(),
   filters: text("filters"),
+  language: text("language").notNull().default("en"),
   isActive: integer("is_active", { mode: "boolean" }).notNull().default(true),
   createdAt: text("created_at").notNull(),
 });

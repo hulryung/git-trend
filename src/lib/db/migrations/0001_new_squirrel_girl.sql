@@ -1,0 +1,1 @@
+ALTER TABLE `webhook_subscriptions` ADD `language` text DEFAULT 'en' NOT NULL;

@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { url, platform, filters } = body;
+  const { url, platform, filters, language } = body;
 
   if (!url || !platform) {
     return NextResponse.json(
@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
       url,
       platform,
       filters: filters ? JSON.stringify(filters) : null,
+      language: language === "ko" ? "ko" : "en",
       isActive: false,
       createdAt: new Date().toISOString(),
     })

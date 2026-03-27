@@ -17,13 +17,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Trash2, Plus, Bell, Lock, Check, X } from "lucide-react";
+import { Trash2, Plus, Bell, Lock, Check, X, Globe } from "lucide-react";
 
 interface WebhookSubscription {
   id: number;
   url: string;
   platform: string;
   filters: string | null;
+  language: string;
   isActive: boolean;
   createdAt: string;
 }
@@ -64,6 +65,7 @@ function parseFilters(filters: string | null) {
 function WebhookRegisterForm() {
   const [url, setUrl] = useState("");
   const [platform, setPlatform] = useState("");
+  const [language, setLanguage] = useState("en");
   const [filterLanguage, setFilterLanguage] = useState("");
   const [filterMinStars, setFilterMinStars] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -84,6 +86,7 @@ function WebhookRegisterForm() {
       body: JSON.stringify({
         url,
         platform,
+        language,
         filters: Object.keys(filters).length > 0 ? filters : undefined,
       }),
     });
@@ -92,6 +95,7 @@ function WebhookRegisterForm() {
     if (res.ok) {
       setUrl("");
       setPlatform("");
+      setLanguage("en");
       setFilterLanguage("");
       setFilterMinStars("");
       setSubmitted(true);
@@ -156,6 +160,16 @@ function WebhookRegisterForm() {
             </Select>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger className="w-full sm:w-48">
+                <Globe className="w-4 h-4 mr-1" />
+                <SelectValue placeholder="알림 언어" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="en">English</SelectItem>
+                <SelectItem value="ko">한국어</SelectItem>
+              </SelectContent>
+            </Select>
             <Input
               placeholder="언어 필터 (예: TypeScript)"
               value={filterLanguage}
@@ -307,6 +321,9 @@ function WebhookAdminPanel() {
                         }`}
                       >
                         {wh.isActive ? "승인됨" : "대기 중"}
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium">
+                        {wh.language === "ko" ? "한국어" : "EN"}
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground truncate">

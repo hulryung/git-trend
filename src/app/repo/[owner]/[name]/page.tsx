@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { db } from "@/lib/db";
@@ -9,6 +10,7 @@ import {
 } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { AnalysisPanel } from "@/components/analysis-panel";
+import { RelatedNews } from "@/components/related-news";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -22,6 +24,43 @@ import { StarHistoryChart } from "@/components/star-history-chart";
 
 interface PageProps {
   params: Promise<{ owner: string; name: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { owner, name } = await params;
+  const fullName = `${owner}/${name}`;
+
+  const repo = await db
+    .select()
+    .from(repositories)
+    .where(eq(repositories.fullName, fullName))
+    .limit(1);
+
+  if (repo.length === 0) {
+    return { title: "Repository Not Found" };
+  }
+
+  const r = repo[0];
+  const analysis = await db
+    .select()
+    .from(analyses)
+    .where(eq(analyses.repoId, r.id))
+    .limit(1);
+
+  const summary = analysis[0]?.summaryKo || analysis[0]?.summaryEn || r.description;
+  const title = `${fullName} - AI Analysis & Trending`;
+
+  return {
+    title,
+    description: summary || `${fullName} - Trending GitHub repository with ${r.stars} stars`,
+    openGraph: {
+      title,
+      description: summary || `${fullName} - ${r.stars} stars`,
+      type: "article",
+    },
+  };
 }
 
 export default async function RepoDetailPage({ params }: PageProps) {
@@ -140,6 +179,8 @@ export default async function RepoDetailPage({ params }: PageProps) {
           analyzedAt={analysisData.analyzedAt}
         />
       )}
+
+      <RelatedNews owner={owner} name={name} />
 
       {stars.length > 0 && (
         <Card>
