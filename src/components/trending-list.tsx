@@ -11,6 +11,7 @@ interface NewsItem {
   date: string | null;
   points?: number;
   comments?: number;
+  commentsUrl?: string;
 }
 
 interface TrendingItem {

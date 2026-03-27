@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Star, GitFork, TrendingUp, ExternalLink } from "lucide-react";
+import { Star, GitFork, TrendingUp, ExternalLink, MessageSquare } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -11,6 +11,7 @@ interface NewsItem {
   date: string | null;
   points?: number;
   comments?: number;
+  commentsUrl?: string;
 }
 
 interface RepoCardProps {
@@ -132,23 +133,34 @@ export function RepoCard({
             {news && news.length > 0 && (
               <div className="mt-3 pt-3 border-t space-y-1.5">
                 {news.map((item, i) => (
-                  <a
-                    key={i}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs group"
-                  >
+                  <div key={i} className="flex items-center gap-2 text-xs">
                     <Badge
                       className={`text-[9px] px-1 py-0 shrink-0 ${sourceBadgeColor[item.source] || "bg-muted text-muted-foreground"}`}
                     >
                       {item.sourceLabel}
                     </Badge>
-                    <span className="truncate text-muted-foreground group-hover:text-foreground transition-colors">
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="truncate text-primary hover:underline"
+                    >
                       {item.title}
-                    </span>
-                    <ExternalLink className="w-3 h-3 shrink-0 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
+                      <ExternalLink className="w-3 h-3 inline-block ml-1 align-text-bottom" />
+                    </a>
+                    {item.commentsUrl && item.comments != null && (
+                      <a
+                        href={item.commentsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="shrink-0 flex items-center gap-0.5 text-muted-foreground hover:text-foreground transition-colors"
+                        title="댓글 보기"
+                      >
+                        <MessageSquare className="w-3 h-3" />
+                        {item.comments}
+                      </a>
+                    )}
+                  </div>
                 ))}
               </div>
             )}

@@ -6,6 +6,7 @@ export interface NewsItem {
   date: string | null;
   points?: number;
   comments?: number;
+  commentsUrl?: string;
   summary?: string;
   tag?: string;
 }
@@ -50,7 +51,7 @@ async function searchHackerNews(query: string): Promise<NewsItem[]> {
   return (data.hits || []).map(
     (hit: {
       title: string;
-      url: string;
+      url: string | null;
       objectID: string;
       created_at: string;
       points: number;
@@ -63,6 +64,7 @@ async function searchHackerNews(query: string): Promise<NewsItem[]> {
       date: hit.created_at,
       points: hit.points,
       comments: hit.num_comments,
+      commentsUrl: `https://news.ycombinator.com/item?id=${hit.objectID}`,
     })
   );
 }
